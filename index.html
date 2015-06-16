@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Alley Hacks: Contribute to Fieldmanager</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="Alley Interactive">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/alley.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section class="center" data-background="images/flatiron.jpg">
+					<section id="title-slide" class="center">
+						<h2>Alley Hacks:<br />Contribute to Fieldmanager</h2>
+						<p>Settle in and <code>apm install wordpress-develop</code></p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Pre-requisites</h2>
+					<p><code>broadway/www/wordpress-develop/</code> must exist</p>
+					<br />
+					<pre><code data-trim class="bash">
+apm install wordpress-develop
+					</code></pre>
+				</section>
+
+				<section>
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>TDD: Write your (failing) tests first, then make them pass.</p>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>It all starts with the tests!<br />Let's go to our Fieldmanager directory and run them:</p>
+						<br />
+						<pre><code data-trim class="bash">
+cd ~/broadway/plugins/wordpress-fieldmanager/
+phpunit
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<pre><code data-trim class="bash">
+Installing...
+Running as single site... To run multisite, use -c tests/phpunit/multisite.xml
+Not running ajax tests. To execute these, use --group ajax.
+Not running ms-files tests. To execute these, use --group ms-files.
+Not running external-http tests. To execute these, use --group external-http.
+PHPUnit 4.2.6 by Sebastian Bergmann.
+
+Configuration read from /var/www/wordpress/wp-content/plugins/wordpress-fieldmanager/phpunit.xml
+
+...............................................................  63 / 158 ( 39%)
+............................................................... 126 / 158 ( 79%)
+................................
+
+Time: 13.83 seconds, Memory: 33.00Mb
+
+OK (158 tests, 1690 assertions)
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<pre><code data-trim contenteditable class="bash">
+phpunit --group=quickedit
+
+F.....
+
+Time: 2.11 seconds, Memory: 26.75Mb
+
+There was 1 failure:
+
+1) Test_Fieldmanager_Context_Quickedit::test_context_render
+Failed asserting that '' contains "fm-quickedit".
+
+/var/www/wordpress/wp-content/plugins/wordpress-fieldmanager/tests/php/test-fieldmanager-context-quickedit.php:128
+
+FAILURES!
+Tests: 6, Assertions: 40, Failures: 1.
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>PHPUnit is a <strong>unit</strong> testing framework. You use it to test small, individual <strong>units</strong> of functionality</p>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>Don't be intimidated! Writing unit tests is simple and fun</p>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>For FM, there's the PHPUnit framework, but there's also an extension provided by WordPress Core</p>
+						<ul>
+							<li class="fragment">PHPUnit: there's a lot to it, but the most<br />important bits are its <a href="https://phpunit.de/manual/current/en/appendixes.assertions.html">assertions</a></li>
+							<li class="fragment">WP: the most important bits are its factories<br />(read more: <a href="https://codesymphony.co/writing-wordpress-plugin-unit-tests/">here</a> and <a href="http://taylorlovett.com/tag/wp_unittestcase/">here</a>).</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>Code Coverage: a helpful report card</p>
+						<br />
+						<pre><code data-trim class="bash">
+xdebug_on
+phpunit --coverage-html ./report
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>What does a test look like?</p>
+						<br />
+						<pre><code data-trim contenteditable class="php">
+function test_truthiness() {
+	$this->assertTrue( true );
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>TDD and Unit Testing</h2>
+						<p>What about JS?</p>
+						<p>Someone, please, <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/10">set that up</a></p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Let's get to work!</h2>
+						<p>Five options</p>
+						<ol>
+							<li><a href="#/4/1">Improve documentation</a></li>
+							<li>Fix bugs (<a href="#/4/2">Frontend</a>/<a href="#/4/3">Backend</a>)</li>
+							<li>Add new features (<a href="#/4/4">Frontend</a>/<a href="#/4/5">Backend</a>)</li>
+							<li><a href="#/4/6">Code cleanup</a></li>
+							<li><a href="https://github.com/alleyinteractive/wordpress-fieldmanager/pulls">Finish and merge and existing PR</a></li>
+						</ol>
+					</section>
+
+					<section>
+						<h2>Improve Documentation</h2>
+						<ul>
+							<li><a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/339">Inline Docs</a></li>
+							<li><a href="http://www.fieldmanager.org/">How-to Docs</a> (discuss with Matt Boynes)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Fix Bugs - Frontend</h2>
+						<ul>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/51">Repeatable grids don't work</a></li>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/241">Checkboxes should also support display_if</a> and <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/242">Display-if doesn't support boolean values</a></li>
+							<li>Eash: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/333">Labels' "for" attributes aren't updated on add</a></li>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/341">Quickediting adds zeros to quickedit box</a></li>
+							<li>Challenging: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/337">Toolbar buttons don't work in text mode in dynamically-added RichTextAreas</a></li>
+							<li>Challenging: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/342">RichTextArea doesn't work in Quickedit</a></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Fix Bugs - Backend</h2>
+						<ul>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/265">default_value doesn't work if save_to_post_parent</a></li>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/281">Post context only checks permissions for "posts"</a></li>
+							<li>Maybe Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/270">Empty meta is stored if datasource term 'only_save_to_taxonomy' =&gt; true</a></li>
+							<li>Challenging: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/64">Clean up reciprocals when a post is deleted</a></li>
+							<li>Maybe Challenging: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/86">save_empty and single elements</a></li>
+							<li>Hard: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/195">Submenu context doesn't work for pages with secondary query args</a></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Add New Features - Frontend</h2>
+						<ul>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/103">Consider using jQuery Timepicker for Datepicker->use_time = true</a></li>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/168">Add word count to Fieldmanager_RichTextArea</a></li>
+							<li>Maybe Challenging: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/46">Autocomplete with custom datasource requires exact match</a></li>
+							<li>Maybe Challenging<a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/301">Allow label_macro to use multiple fields</a></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Add New Features - Backend</h2>
+						<ul>
+							<li>Easy: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/312">Color picker field</a> (see <a href="https://alleyinteractive.slack.com/archives/fieldmanager/p1433280884000053">this slack discussion</a>)</li>
+							<li>Challenging: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/338">Improve Quickedit Context</a></li>
+							<li>Hard: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/47">Autocomplete on users needs enhancement</a></li>
+							<li>Hard: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/95">Add Widget Context</a></li>
+							<li>Hard: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/331">Add Customizer Context</a> (check with David Herrera)</li>
+							<li>Hard: <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/330">Add ability to set and sort post children, using post_parent and menu_order</a></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Code Cleanup</h2>
+						<ul>
+							<li>
+								<a href="https://github.com/alleyinteractive/wordpress-fieldmanager/issues/271">Adhere to WP Coding Standards</a><br />
+								<a href="https://github.com/alleyinteractive/wordpress-fieldmanager/pull/300">Dan Beil started this up!</a>, also see its <a href="https://github.com/alleyinteractive/wordpress-fieldmanager/pull/276">parent PR</a>
+							</li>
+						</ul>
+					</section>
+				</section>
+			</div>
+
+			<img src="images/logo.png" alt="Alley Interactive" id="logo" />
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: false,
+				rollingLinks: false,
+				transition: 'default',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
